@@ -37,5 +37,7 @@ _threads/
 
 # Production secrets
 application-prod.yml
+src/test/
+src/main/resources/application.yml
 
 ${project.build.directory}/
