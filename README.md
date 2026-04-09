@@ -37,8 +37,8 @@ A multi-user web platform for tracking every individual DSA problem solved acros
 | Thread | Scope | Status |
 |--------|-------|--------|
 | Thread 1 | Spring Boot setup, JWT auth, User entity | ✅ Done |
-| Thread 2 | Problem + Tag CRUD | 🔲 Not started |
-| Thread 3 | Codeforces API integration | 🔲 Not started |
+| Thread 2 | Problem + Tag CRUD | ✅ Done |
+| Thread 3 | Codeforces API integration | ✅ Done |
 | Thread 4 | LeetCode GraphQL integration | 🔲 Not started |
 | Thread 5 | Async sync orchestration | 🔲 Not started |
 | Thread 6 | Stats, heatmap, streaks, contests | 🔲 Not started |
@@ -57,7 +57,7 @@ POST   /api/auth/register     Register with email, password, optional platform h
 POST   /api/auth/login        Login → returns JWT
 ```
 
-### Problems (Thread 2 — Coming)
+### Problems (Thread 2 — Done)
 ```
 GET    /api/problems          Filtered, paginated problem list
 POST   /api/problems          Manual problem entry
