@@ -28,8 +28,8 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
           AND (:platform IS NULL OR p.platform = :platform)
           AND (:difficulty IS NULL OR p.difficulty = :difficulty)
           AND (:tagName IS NULL OR t.name = :tagName)
-          AND (:from IS NULL OR p.solvedAt >= :from)
-          AND (:to IS NULL OR p.solvedAt <= :to)
+          AND (CAST(:from AS timestamp) IS NULL OR p.solvedAt >= :from)
+          AND (CAST(:to AS timestamp) IS NULL OR p.solvedAt <= :to)
           AND (:needsRevision IS NULL OR p.needsRevision = :needsRevision)
         ORDER BY p.solvedAt DESC
         """,
@@ -40,8 +40,8 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
           AND (:platform IS NULL OR p.platform = :platform)
           AND (:difficulty IS NULL OR p.difficulty = :difficulty)
           AND (:tagName IS NULL OR t.name = :tagName)
-          AND (:from IS NULL OR p.solvedAt >= :from)
-          AND (:to IS NULL OR p.solvedAt <= :to)
+          AND (CAST(:from AS timestamp) IS NULL OR p.solvedAt >= :from)
+          AND (CAST(:to AS timestamp) IS NULL OR p.solvedAt <= :to)
           AND (:needsRevision IS NULL OR p.needsRevision = :needsRevision)
         """
     )
