@@ -39,7 +39,7 @@ A multi-user web platform for tracking every individual DSA problem solved acros
 | Thread 1 | Spring Boot setup, JWT auth, User entity | ✅ Done |
 | Thread 2 | Problem + Tag CRUD | ✅ Done |
 | Thread 3 | Codeforces API integration | ✅ Done |
-| Thread 4 | LeetCode GraphQL integration | 🔲 Not started |
+| Thread 4 | LeetCode GraphQL integration | ✅ Done | -> Uses Session Cookies for leetcode, added by the user for now
 | Thread 5 | Async sync orchestration | 🔲 Not started |
 | Thread 6 | Stats, heatmap, streaks, contests | 🔲 Not started |
 | Thread 7 | React setup, landing page, auth pages | 🔲 Not started |
