@@ -14,6 +14,7 @@ import com.dsatracker.dsa_tracker.repository.ContestRepository;
 import com.dsatracker.dsa_tracker.repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,7 +28,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class CodeforcesService {
 
@@ -35,6 +35,17 @@ public class CodeforcesService {
     private final ProblemRepository problemRepository;
     private final ContestRepository contestRepository;
     private final ProblemService problemService;
+
+    public CodeforcesService(
+            @Qualifier("codeforcesWebClient") WebClient codeforcesWebClient,
+            ProblemRepository problemRepository,
+            ContestRepository contestRepository,
+            ProblemService problemService) {
+        this.codeforcesWebClient = codeforcesWebClient;
+        this.problemRepository = problemRepository;
+        this.contestRepository = contestRepository;
+        this.problemService = problemService;
+    }
 
     /**
      * Main sync method — fetches submissions + contests from CF and saves them.
