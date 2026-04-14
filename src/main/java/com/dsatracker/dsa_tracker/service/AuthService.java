@@ -3,7 +3,7 @@ package com.dsatracker.dsa_tracker.service;
 import com.dsatracker.dsa_tracker.dto.LoginRequest;
 import com.dsatracker.dsa_tracker.dto.LoginResponse;
 import com.dsatracker.dsa_tracker.dto.RegisterRequest;
-import com.dsatracker.dsa_tracker.enums.SyncStatus;
+import com.dsatracker.dsa_tracker.enums.SyncStatusEnum;
 import com.dsatracker.dsa_tracker.exception.UserAlreadyExistsException;
 import com.dsatracker.dsa_tracker.model.User;
 import com.dsatracker.dsa_tracker.repository.UserRepository;
@@ -48,7 +48,7 @@ public class AuthService {
                 .codeforcesVerified(false)
                 .leetcodeVerified(false)
                 .codechefVerified(false)
-                .syncStatus(SyncStatus.PENDING)
+                .syncStatusEnum(SyncStatusEnum.PENDING)
                 .build();
 
         userRepository.save(user);
@@ -68,7 +68,7 @@ public class AuthService {
 
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
 
-        return new LoginResponse(token, user.getEmail(), user.getSyncStatus().name());
+        return new LoginResponse(token, user.getEmail(), user.getSyncStatusEnum().name());
     }
 
     private String trimOrNull(String value) {

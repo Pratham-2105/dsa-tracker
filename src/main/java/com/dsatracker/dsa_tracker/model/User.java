@@ -1,6 +1,6 @@
 package com.dsatracker.dsa_tracker.model;
 
-import com.dsatracker.dsa_tracker.enums.SyncStatus;
+import com.dsatracker.dsa_tracker.enums.SyncStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -61,7 +61,7 @@ public class User implements UserDetails {
     // EnumType.STRING stores "PENDING" as text. Never use EnumType.ORDINAL —
     // inserting a new enum value in the middle breaks all existing DB rows.
     @Builder.Default
-    private SyncStatus syncStatus = SyncStatus.PENDING;
+    private SyncStatusEnum syncStatusEnum = SyncStatusEnum.PENDING;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
