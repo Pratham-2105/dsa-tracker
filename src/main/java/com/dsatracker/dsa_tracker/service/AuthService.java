@@ -3,7 +3,6 @@ package com.dsatracker.dsa_tracker.service;
 import com.dsatracker.dsa_tracker.dto.LoginRequest;
 import com.dsatracker.dsa_tracker.dto.LoginResponse;
 import com.dsatracker.dsa_tracker.dto.RegisterRequest;
-import com.dsatracker.dsa_tracker.enums.SyncStatusEnum;
 import com.dsatracker.dsa_tracker.exception.UserAlreadyExistsException;
 import com.dsatracker.dsa_tracker.model.User;
 import com.dsatracker.dsa_tracker.repository.UserRepository;
@@ -16,12 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/*
- * @Transactional on register():
- * Spring wraps this method in a DB transaction. If anything crashes mid-method,
- * the whole thing rolls back — no half-created users in the DB.
- * It only works when called via Spring's proxy (i.e., through injection — not this.register()).
- */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -30,6 +23,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final SyncOrchestrator syncOrchestrator;
 
     @Transactional
     public void register(RegisterRequest request) {
@@ -48,12 +42,13 @@ public class AuthService {
                 .codeforcesVerified(false)
                 .leetcodeVerified(false)
                 .codechefVerified(false)
-                .syncStatusEnum(SyncStatusEnum.PENDING)
                 .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
-
+        // Kick off async sync for any platforms the user configured.
+        // This returns almost instantly — actual sync runs in background.
+        syncOrchestrator.triggerInitialSync(savedUser);
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -66,9 +61,7 @@ public class AuthService {
 
         String token = jwtTokenProvider.generateToken(authentication);
 
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-
-        return new LoginResponse(token, user.getEmail(), user.getSyncStatusEnum().name());
+        return new LoginResponse(token, request.getEmail());
     }
 
     private String trimOrNull(String value) {

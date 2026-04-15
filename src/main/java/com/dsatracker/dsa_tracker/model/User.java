@@ -1,6 +1,5 @@
 package com.dsatracker.dsa_tracker.model;
 
-import com.dsatracker.dsa_tracker.enums.SyncStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,23 +44,8 @@ public class User implements UserDetails {
     private String leetcodeVerificationCode;
     private String codechefVerificationCode;
 
-    /*
-     * LeetCode's public API caps submissions at ~20. To fetch full history,
-     * we need the user's authenticated session cookie. This is the same
-     * approach used by Codolio, LeetCode Helper, and other LC tools.
-     *
-     * Stored as TEXT because session cookies can be 200+ characters.
-     * This value expires (typically after a few weeks), so the frontend
-     * should handle "cookie expired" errors and prompt the user to update.
-     */
     @Column(name = "leetcode_session_cookie", columnDefinition = "TEXT")
     private String leetcodeSessionCookie;
-
-    @Enumerated(EnumType.STRING)
-    // EnumType.STRING stores "PENDING" as text. Never use EnumType.ORDINAL —
-    // inserting a new enum value in the middle breaks all existing DB rows.
-    @Builder.Default
-    private SyncStatusEnum syncStatusEnum = SyncStatusEnum.PENDING;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -70,8 +54,6 @@ public class User implements UserDetails {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-
-
 
     // ── UserDetails interface ──────────────────────────────────────────────
 
@@ -83,7 +65,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(); // No roles yet
+        return List.of();
     }
 
     @Override public boolean isAccountNonExpired()     { return true; }

@@ -24,8 +24,7 @@ public class TestController {
     ) {
         return ResponseEntity.ok(Map.of(
                 "message", "JWT valid! You are authenticated.",
-                "email", user.getEmail(),
-                "syncStatus", user.getSyncStatusEnum().name()
+                "email", user.getEmail()
         ));
     }
 }
