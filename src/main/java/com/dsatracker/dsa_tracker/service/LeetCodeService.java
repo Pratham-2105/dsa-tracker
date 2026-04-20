@@ -38,18 +38,21 @@ public class LeetCodeService {
     private final ContestRepository contestRepository;
     private final ProblemService problemService;
     private final ObjectMapper objectMapper;
+    private final DailyActivityService dailyActivityService;
 
     public LeetCodeService(
             @Qualifier("leetcodeWebClient") WebClient leetcodeWebClient,
             ProblemRepository problemRepository,
             ContestRepository contestRepository,
             ProblemService problemService,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper,
+            DailyActivityService dailyActivityService) {
         this.leetcodeWebClient = leetcodeWebClient;
         this.problemRepository = problemRepository;
         this.contestRepository = contestRepository;
         this.problemService = problemService;
         this.objectMapper = objectMapper;
+        this.dailyActivityService = dailyActivityService;
     }
 
     // ==================== MAIN ENTRY POINT ====================
@@ -256,6 +259,7 @@ public class LeetCodeService {
 
             Problem problem = mapToProblem(question, user);
             problemRepository.save(problem);
+            dailyActivityService.recordProblemAdded(problem);
             importedCount++;
         }
 

@@ -35,16 +35,19 @@ public class CodeforcesService {
     private final ProblemRepository problemRepository;
     private final ContestRepository contestRepository;
     private final ProblemService problemService;
+    private final DailyActivityService dailyActivityService;
 
     public CodeforcesService(
             @Qualifier("codeforcesWebClient") WebClient codeforcesWebClient,
             ProblemRepository problemRepository,
             ContestRepository contestRepository,
-            ProblemService problemService) {
+            ProblemService problemService,
+            DailyActivityService dailyActivityService) {
         this.codeforcesWebClient = codeforcesWebClient;
         this.problemRepository = problemRepository;
         this.contestRepository = contestRepository;
         this.problemService = problemService;
+        this.dailyActivityService = dailyActivityService;
     }
 
     /**
@@ -132,6 +135,7 @@ public class CodeforcesService {
             // Step 4: Transform and save
             Problem problem = mapToProblem(sub, user);
             problemRepository.save(problem);
+            dailyActivityService.recordProblemAdded(problem);  // ← ADD
             importedCount++;
         }
 

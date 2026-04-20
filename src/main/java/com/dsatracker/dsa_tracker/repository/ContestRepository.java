@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ContestRepository extends JpaRepository<Contest, Long> {
-    List<Contest> findByUserIdAndPlatformOrderByContestDateDesc(Long userId, Platform platform);
+    List<Contest> findByUserIdAndPlatformOrderByContestDateDesc(Long userId, String platform);
 
     List<Contest> findByUserIdOrderByContestDateDesc(Long userId);
 

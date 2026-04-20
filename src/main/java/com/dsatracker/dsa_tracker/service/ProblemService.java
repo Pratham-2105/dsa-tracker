@@ -32,6 +32,8 @@ public class ProblemService {
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
 
+    private final DailyActivityService dailyActivityService;
+
     /**
      * Create a new problem (manual entry by user)
      */
@@ -60,6 +62,7 @@ public class ProblemService {
         problem.setTags(tags);
 
         Problem saved = problemRepository.save(problem);
+        dailyActivityService.recordProblemAdded(saved);
         return toResponse(saved);
     }
 
@@ -126,6 +129,7 @@ public class ProblemService {
             throw new AccessDeniedException("You don't own this problem");
         }
 
+        dailyActivityService.recordProblemRemoved(problem);
         problemRepository.delete(problem);
     }
 
