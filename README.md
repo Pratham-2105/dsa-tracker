@@ -40,8 +40,8 @@ A multi-user web platform for tracking every individual DSA problem solved acros
 | Thread 2 | Problem + Tag CRUD | ✅ Done |
 | Thread 3 | Codeforces API integration | ✅ Done |
 | Thread 4 | LeetCode GraphQL integration | ✅ Done | -> Uses Session Cookies for leetcode, added by the user for now
-| Thread 5 | Async sync orchestration | 🔲 Not started |
-| Thread 6 | Stats, heatmap, streaks, contests | 🔲 Not started |
+| Thread 5 | Async sync orchestration | ✅ Done  |
+| Thread 6 | Stats, heatmap, streaks, contests | ✅ Done  |
 | Thread 7 | React setup, landing page, auth pages | 🔲 Not started |
 | Thread 8 | React dashboard | 🔲 Not started |
 | Thread 9 | Problem log + Pattern Library pages | 🔲 Not started |
